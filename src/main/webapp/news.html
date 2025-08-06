@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>【访企拓岗促就业】机电工程学院、数学与计算科学学院赴珠三角开展访企拓岗暨校友走访活动（图）</title>
+    <!-- 引入DOMPurify库 -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .article-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .article-meta {
+            color: #7f8c8d;
+            margin: 10px 0 20px;
+            font-size: 0.9em;
+        }
+        .article-content {
+            min-height: 100px; /* 确保容器有最小高度，即使内容为空也能看到区域 */
+            border: 1px solid #eee; /* 临时边框，帮助确认容器位置 */
+            padding: 15px;
+        }
+        .article-content p {
+            line-height: 1.8;
+            margin: 16px 0;
+        }
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .debug-info {
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <h1 class="article-title"></h1>
+    <div class="article-meta"></div>
+    <div class="article-content"></div>
+
+    <!-- 调试信息区域 -->
+    <div class="debug-info" id="debug"></div>
+</div>
+
+<script>
+    // 记录调试信息
+    let debugLogs = [];
+    function logDebug(message) {
+        debugLogs.push(`[${new Date().toLocaleTimeString()}] ${message}`);
+        document.getElementById('debug').textContent = debugLogs.join('\n');
+    }
+
+    logDebug('脚本开始执行');
+
+    // 等待DOM加载完成
+    document.addEventListener('DOMContentLoaded', () => {
+        logDebug('DOM加载完成，开始处理数据');
+
+        try {
+            // 模拟文章数据
+            const articleData = {
+                "author": "张三",
+                "clickCount": 0,
+                "content": "<hr/><p> &nbsp; &nbsp; &nbsp; &nbsp;近日，机电工程学院、数学与计算科学学院负责人带队先后前往佛山市顺德区冠宇达电源有限公司、日丰企业集团有限公司、中山市罗顿智能科技有限公司、惠州市博实结科技有限公司等单位开展访企拓岗暨校友走访活动。校企围绕人才培养、专业实习、产学研合作、毕业生推介等方面开展深入交流，并听取校友对校庆工作和学校高质量发展的意见建议。</p><p style=\"text-align: center;\"><img src=\"http://localhost:8080/upload/aaa.png\" alt=\"企业走访活动照片\" data-href=\"\" style=\"width: 50%;\"></p>",
+                "id": "258aa6ef7f0b46cd86aa96bd90f109f7",
+                "provider": "ly",
+                "pubTime": 1754300343000,
+                "title": "【访企拓岗促就业】机电工程学院、数学与计算科学学院赴珠三角开展访企拓岗暨校友走访活动（图）"
+            };
+            logDebug('数据加载成功: ' + JSON.stringify(articleData, null, 2).substring(0, 100) + '...');
+
+            // 处理时间
+            const pubDate = new Date(articleData.pubTime);
+            const formattedTime = pubDate.toLocaleString();
+            logDebug('时间格式化完成: ' + formattedTime);
+
+            // 获取DOM元素
+            const titleElement = document.querySelector('.article-title');
+            const metaElement = document.querySelector('.article-meta');
+            const contentContainer = document.querySelector('.article-content');
+
+            logDebug('标题元素存在: ' + (titleElement !== null));
+            logDebug('元信息元素存在: ' + (metaElement !== null));
+            logDebug('内容容器存在: ' + (contentContainer !== null));
+
+            // 填充标题
+            if (titleElement) {
+                titleElement.textContent = articleData.title;
+                logDebug('标题已设置: ' + articleData.title.substring(0, 30) + '...');
+            } else {
+                logDebug('错误: 未找到标题元素');
+            }
+
+            // 填充元信息
+            if (metaElement) {
+                metaElement.textContent = `作者：${articleData.author} | 发布时间：${formattedTime} | 阅读量：${articleData.clickCount}`;
+                logDebug('元信息已设置');
+            } else {
+                logDebug('错误: 未找到元信息元素');
+            }
+
+            // 填充内容 - 这是核心部分
+            if (contentContainer) {
+                logDebug('原始内容: ' + articleData.content.substring(0, 100) + '...');
+
+                // 先尝试不净化直接插入，测试是否是净化过程的问题
+                contentContainer.innerHTML = articleData.content;
+                logDebug('内容已直接插入容器');
+
+                // 检查DOMPurify是否可用
+                if (window.DOMPurify) {
+                    const sanitizedContent = DOMPurify.sanitize(articleData.content);
+                    logDebug('净化后的内容: ' + sanitizedContent.substring(0, 100) + '...');
+                    // 如果你确认净化没问题，可以启用下面这行
+                    // contentContainer.innerHTML = sanitizedContent;
+                } else {
+                    logDebug('警告: DOMPurify未加载，使用原始内容');
+                }
+            } else {
+                logDebug('错误: 未找到内容容器');
+            }
+
+        } catch (error) {
+            logDebug('发生错误: ' + error.message);
+            console.error('处理过程出错:', error);
+        }
+
+        logDebug('处理完成');
+    });
+</script>
+</body>
+</html>

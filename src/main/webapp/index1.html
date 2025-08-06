@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>树形菜单</title>
+<!--    <link rel="stylesheet" href="./css/fontawesome.min.css">-->
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        li{
+            list-style: none;
+        }
+        .main_menu > li > a{
+            border-bottom: 1px solid black;
+        }
+        .submenu > li:last-child a:after{
+            content: "";
+            display: block;
+            width: 190px;
+            position: absolute;
+            left: -30px;
+            top: 40px;
+            border-bottom: 1px solid;
+        }
+        .submenu{
+            position: relative;
+            left: 30px;
+        }
+        .submenu:before{
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 1;
+            left: -10px;
+            top: 0;
+            bottom: 0;
+            border: 1px dotted;
+            border-width: 0 0 0 1px;
+        }
+        .submenu>li{
+            position: relative;
+        }
+        .submenu>li:before{
+            content: "";
+            display: block;
+            width: 10px;
+            position: absolute;
+            left: -10px;
+            top: 19px;
+            border: 1px dotted;
+            border-width: 1px 0 0;
+        }
+        .submenu>li:not(:last-child):after{
+            content: "";
+            display: block;
+            width: 190px;
+            position: absolute;
+            left: -30px;
+            top: 40px;
+            border-bottom: 1px dotted;
+        }
+        li > a{
+            text-decoration: none;
+            color: #616161;
+            display: block;
+            width: 189px;
+            height: 40px;
+            line-height: 40px;
+        }
+        .main_menu > li > a{
+            padding-left: 10px;
+        }
+    </style>
+    <script>
+        window.onload=function (){
+            //在index输出菜单
+            console.log(JSON.parse(localStorage.getItem("menus")).permissions);
+            let permissions = JSON.parse(localStorage.getItem("menus")).permissions;
+            let secondLevelPermissions = new Array();
+            for (const permission of permissions) {
+                if (permission.parentId!=0){
+                    secondLevelPermissions.push(permission);
+                }
+            }
+            for (const permission of permissions) {
+                // console.log(permission.perName);
+                //先处理一级菜单
+                if (permission.parentId==0){
+                    console.log("一级菜单："+permission.perName);
+                    let liEl = document.createElement("li");
+                    let aEl = document.createElement("a");
+                    aEl.appendChild(document.createTextNode(permission.perName));
+                    aEl.href=permission.url;
+                    liEl.appendChild(aEl);
+                    let ulEl = document.createElement("ul");
+                    ulEl.className="submenu";
+                    ulEl.id=permission.perId;
+                    liEl.appendChild(ulEl);
+                    document.querySelector(".main_menu").appendChild(liEl);
+                }
+                // else {
+                //     console.log("二级菜单："+permission.perName);
+                //     let liEl = document.createElement("li");
+                //     let aEl = document.createElement("a");
+                //     aEl.appendChild(document.createTextNode(permission.perName));
+                //     aEl.href=permission.url;
+                //     liEl.appendChild(aEl);
+                //     liEl.id=permission.perId;
+                //     document.getElementById(permission.parentId).appendChild(liEl);
+                // }
+            }
+            for (const secondLevelPermission of secondLevelPermissions) {
+                    console.log("二级菜单："+secondLevelPermission.perName);
+                    let liEl = document.createElement("li");
+                    let aEl = document.createElement("a");
+                    aEl.appendChild(document.createTextNode(secondLevelPermission.perName));
+                    aEl.href=secondLevelPermission.url;
+                    liEl.appendChild(aEl);
+                    liEl.id=secondLevelPermission.perId;
+                    document.getElementById(secondLevelPermission.parentId).appendChild(liEl);
+            }
+        }
+    </script>
+</head>
+<body>
+    <ul class="main_menu">
+<!--        <li><a href="">首页</a></li>-->
+<!--        <li>-->
+<!--            <a href="">账号管理</a>-->
+<!--            <ul class="submenu">-->
+<!--                <li><a href="">基本资料</a></li>-->
+<!--                <li><a href="">密码修改</a></li>-->
+<!--                <li><a href="">绑定手机</a></li>-->
+<!--            </ul>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="">消息中心</a>-->
+<!--            <ul class="submenu">-->
+<!--                <li><a href="">全部消息</a></li>-->
+<!--            </ul>-->
+<!--        </li>-->
+    </ul>
+
+</body>
+</html>

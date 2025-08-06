@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        /* 导航栏容器 - 透明背景 */
+        #index{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 100px;
+            background-color: rgba(99, 91, 91, 0.7);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            padding: 0 50px;
+        }
+
+        #index-content{
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        #top-l img{
+            height: 80px;
+        }
+
+        #top-r{
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* 顶部导航样式 */
+        .index-top-ul{
+            display: flex;
+            gap: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .index-top-ul li a{
+            color: white;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        /* 底部主导航样式 */
+        .index-bottom-ul{
+            display: flex;
+            gap: 1.5em;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .index-bottom-ul li{
+            position: relative;
+        }
+
+        .index-bottom-ul li a{
+            color: white;
+            font-size: 15px;
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+
+        /* 下拉菜单样式 */
+        .submenu{
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 150px;
+            background-color: rgba(99, 91, 91, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 100;
+        }
+
+        .submenu li{
+            margin: 8px 0;
+        }
+
+        .submenu li a{
+            color: white;
+            font-size: 14px;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        /* 鼠标悬停效果 */
+        .index-top-ul li a:hover,
+        .index-bottom-ul li a:hover,
+        .submenu li a:hover{
+            color: #ffd700;
+        }
+
+        .index-bottom-ul li:hover .submenu{
+            display: block;
+        }
+
+        /* 横幅图片样式 */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 主体内容容器样式 */
+        .main-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            top: 0;
+        }
+
+        /* 三个板块平均横向排列容器 */
+        .three-columns {
+            display: flex;
+            gap: 20px; /* 板块之间的间距 */
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* 每个板块平均分配宽度 */
+        .news-section, .notice-section, .resource-section {
+            flex: 1; /* 平均分配空间 */
+            min-width: 0; /* 允许内容收缩 */
+        }
+
+        /* 学院新闻区样式 */
+        .news-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-img {
+            width: 100%;
+        }
+
+        .news-img img {
+            width: 100%;
+            height: auto;
+        }
+
+        .news-caption {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            position: relative;
+            bottom: 30px;
+        }
+
+        .news-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: -10px;
+        }
+
+        .news-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .news-dot.active {
+            background-color: #000;
+        }
+
+        /* 通知公告区样式 */
+        .notice-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notice-section h3, .resource-section h3 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .notice {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            transition: background-color 0.3s;
+        }
+
+        .notice:last-child {
+            border-bottom: none;
+        }
+
+        .notice:hover {
+            background-color: #f5f5f5;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        .notice-date {
+            color: #777;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        /* 信息资源区样式 */
+        .resource-section {
+            background-color: #f9f9f9;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .resource-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1200px) {
+            .index-bottom-ul {
+                gap: 1em;
+            }
+            .index-bottom-ul li a {
+                font-size: 14px;
+            }
+            #index {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            #index {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+            }
+            #index-content {
+                flex-direction: column;
+            }
+            #top-r {
+                margin-left: 0;
+                margin-top: 15px;
+                align-items: center;
+            }
+            .index-bottom-ul {
+                justify-content: center;
+            }
+
+            /* 中等屏幕下三个板块变为两行排列 */
+            .three-columns {
+                flex-wrap: wrap;
+            }
+            .news-section, .notice-section {
+                flex: 1 1 45%; /* 占45%宽度 */
+            }
+            .resource-section {
+                flex: 1 1 100%; /* 占100%宽度 */
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* 小屏幕下三个板块垂直排列 */
+            .three-columns {
+                flex-direction: column;
+            }
+            .news-section, .notice-section, .resource-section {
+                width: 100%;
+                margin-top: 20px;
+            }
+            .news-section {
+                margin-top: 0;
+            }
+        }
+    </style>
+    <script>
+        window.addEventListener('load', function() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'getNews', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Accept', 'application/json');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            console.log('请求成功，新闻数据:', data);
+                            
+                            // 显示新闻到通知公告区域
+                            displayNewsInNotice(data);
+                        } catch (e) {
+                            console.error('JSON解析错误:', e);
+                        }
+                    } else {
+                        console.error('请求失败，状态码:', xhr.status);
+                    }
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('网络错误：无法连接到服务器');
+            };
+
+            xhr.timeout = 5000;
+            xhr.ontimeout = function() {
+                console.error('请求超时，请稍后重试');
+            };
+
+            xhr.send();
+        });
+
+        // 显示新闻到通知公告区域的函数
+        function displayNewsInNotice(newsData) {
+            const noticeSection = document.querySelector('.notice-section');
+            
+            // 清空原有的通知内容
+            const existingNotices = noticeSection.querySelectorAll('.notice');
+            existingNotices.forEach(notice => notice.remove());
+            
+            // 显示最新的5条新闻
+            const maxNews = Math.min(5, newsData.length);
+            
+            for (let i = 0; i < maxNews; i++) {
+                const news = newsData[i];
+                const noticeDiv = document.createElement('div');
+                noticeDiv.className = 'notice';
+                
+                // 格式化日期
+                const pubDate = new Date(news.pubTime);
+                const formattedDate = pubDate.getFullYear() + '年' + 
+                                    String(pubDate.getMonth() + 1).padStart(2, '0') + '月' + 
+                                    String(pubDate.getDate()).padStart(2, '0') + '日';
+                
+                // 截取标题，如果太长就省略
+                let title = news.title || '无标题';
+                if (title.length > 20) {
+                    title = title.substring(0, 20) + '...';
+                }
+                
+                noticeDiv.innerHTML = `
+                    <span class="notice-title">${title}</span>
+                    <span class="notice-date">${formattedDate}</span>
+                `;
+                
+                // 添加点击事件，可以跳转到新闻详情页
+                noticeDiv.style.cursor = 'pointer';
+                noticeDiv.addEventListener('click', function() {
+                    // 这里可以跳转到新闻详情页，暂时用alert显示
+                    alert('新闻标题：' + news.title + '\n发布时间：' + formattedDate);
+                });
+                
+                noticeSection.appendChild(noticeDiv);
+            }
+        }
+    </script>
+</head>
+<body>
+<!-- 横幅图片 -->
+<div class="banner">
+    <img src="https://www.guet.edu.cn/_upload/article/images/b7/d4/5e36212d40acb5fc26088bb5b85d/a36a664b-d1e0-4904-9bd8-f1676ea769c3.jpg" alt="学院横幅">
+</div>
+
+<!-- 导航栏 -->
+<div id="index">
+    <div id="index-content">
+        <div id="top-l">
+            <img src="https://www.guet.edu.cn/_upload/tpl/00/1b/27/template27/htmlRes/logo2.png" alt="校徽">
+        </div>
+
+        <div id="top-r">
+            <!-- 顶部导航 -->
+            <div id="index-top">
+                <ul class="index-top-ul">
+                    <li><a href="#">学校首页</a></li>
+                    <li><a href="#">MBA教育中心</a></li>
+                </ul>
+            </div>
+
+            <!-- 底部主导航 -->
+            <div id="index-bottom">
+                <ul class="index-bottom-ul">
+                    <li>
+                        <a href="#">首页</a>
+                        <ul class="submenu">
+                            <li><a href="#">子菜单1</a></li>
+                            <li><a href="#">子菜单2</a></li>
+                            <li><a href="#">子菜单3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">学校介绍</a>
+                        <ul class="submenu">
+                            <li><a href="#">学校概况</a></li>
+                            <li><a href="#">历史沿革</a></li>
+                            <li><a href="#">校园环境</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">新闻动态</a></li>
+                    <li><a href="#">党群工作</a></li>
+                    <li><a href="#">科学研究</a></li>
+                    <li><a href="#">学生工作</a></li>
+                    <li><a href="#">人才培养</a></li>
+                    <li><a href="#">人才招聘</a></li>
+                    <li><a href="#">EDP培训</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 主体内容 -->
+<div class="main-container">
+    <!-- 三个板块平均横向排列 -->
+    <div class="three-columns">
+        <!-- 学院新闻区 -->
+        <div class="news-section">
+            <h3>学院新闻</h3>
+            <div class="news-img">
+                <img src="https://www.guet.edu.cn/_upload/article/images/42/b5/f45d951048f290921c70f7f16335/8f39d663-2dcc-473f-86ea-1f5009cb479c.png" alt="学院新闻图片">
+                <div class="news-caption">广州南方学院商学院来我院调研交流与招聘人才</div>
+                <div class="news-dots">
+                    <span class="news-dot active"></span>
+                    <span class="news-dot"></span>
+                    <span class="news-dot"></span>
+                    <span class="news-dot"></span>
+                    <span class="news-dot"></span>
+                    <span class="news-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 通知公告区 -->
+        <div class="notice-section">
+            <h3>新闻动态</h3>
+            <div class="notice">
+                <span class="notice-title">桂林电子科技大学商学院2025年金星团组出...</span>
+                <span class="notice-date">2025年05月16日</span>
+            </div>
+            <div class="notice">
+                <span class="notice-title">商学院2025年职称认定、重新确认申报材料...</span>
+                <span class="notice-date">2025年05月09日</span>
+            </div>
+            <div class="notice">
+                <span class="notice-title">商学院关于2025年大学生创新创业训练计划...</span>
+                <span class="notice-date">2025年04月25日</span>
+            </div>
+            <div class="notice">
+                <span class="notice-title">商学院关于开展2025年本科生转专业工作的...</span>
+                <span class="notice-date">2025年04月25日</span>
+            </div>
+            <div class="notice">
+                <span class="notice-title">第十五届全国大学生电子商务“三创赛”挑战...</span>
+                <span class="notice-date">2025年04月21日</span>
+            </div>
+        </div>
+
+        <!-- 信息资源区 -->
+        <div class="resource-section">
+            <h3>信息资源</h3>
+            <div class="resource">
+                <div class="resource-icon">慧</div>
+                <span>智慧校园</span>
+            </div>
+            <div class="resource">
+                <div class="resource-icon">学</div>
+                <span>学术资源</span>
+            </div>
+            <div class="resource">
+                <div class="resource-icon">资</div>
+                <span>常用资料</span>
+            </div>
+            <div class="resource">
+                <div class="resource-icon">MBA</div>
+                <span>MBA管理平台</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script>
+        window.onload=function (){
+            document.querySelector("button").onclick=function (){
+                let username=document.getElementById("username").value;
+                let password=document.getElementById("password").value;
+                let xhr=new XMLHttpRequest();
+                xhr.onreadystatechange=function (){
+                    if(xhr.readyState==4){
+                            console.log("服务器返回结果："+xhr.responseText);
+                            let data=JSON.parse(xhr.responseText);
+                            if(data.status="200") {
+                                localStorage.setItem("menus",xhr.responseText);
+                                window.location.href = "index.html";
+                            }
+                    }
+                }
+                xhr.open("POST","http://localhost:8080/CollegeHome_war/login",true);
+                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                xhr.send(`username=${username}&password=${password}`);
+            }
+        }
+    </script>
+</head>
+<body>
+<!--    <form action="login" method="post">-->
+        <label for="username">用户名：</label><input type="text" name="username" id="username" value="zhangsan">
+        <label for="password">密码：</label><input type="text" name="password" id="password" value="zs1234">
+<!--        <input type="submit" value="登录">-->
+<!--    </form>-->
+        <button>登录</button>
+</body>
+</html>

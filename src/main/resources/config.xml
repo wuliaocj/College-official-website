@@ -1,0 +1,3 @@
+<daoConfig>
+    <dao-class>cn.edu.guet.dao.impl.UserDaoimplOracle</dao-class>
+</daoConfig>

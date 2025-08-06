@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文章内容展示</title>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        #title {
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+        #meta {
+            color: #666;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        #content {
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+        .debug {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            font-size: 14px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="article-container">
+    <h1 id="title"></h1>
+    <div id="meta"></div>
+    <div id="content"></div>
+    <div class="debug" id="debug"></div>
+</div>
+
+<!-- 不使用jQuery，改用原生JavaScript -->
+<script>
+    // 简单日志函数
+    function log(msg) {
+        const time = new Date().toLocaleTimeString();
+        const debugElement = document.getElementById('debug');
+        debugElement.innerHTML += `[${time}] ${msg}<br>`;
+        console.log(msg);
+    }
+
+    // 等待DOM加载完成（原生JavaScript方式）
+    document.addEventListener('DOMContentLoaded', function() {
+        log('DOM加载完成，开始处理内容');
+
+        try {
+            // 文章数据
+            const articleData = {
+                "author": "张三",
+                "clickCount": 0,
+                "content": "<hr/><p> &nbsp; &nbsp; &nbsp; &nbsp;近日，机电工程学院、数学与计算科学学院负责人带队先后前往佛山市顺德区冠宇达电源有限公司、日丰企业集团有限公司、中山市罗顿智能科技有限公司、惠州市博实结科技有限公司等单位开展访企拓岗暨校友走访活动。校企围绕人才培养、专业实习、产学研合作、毕业生推介等方面开展深入交流，并听取校友对校庆工作和学校高质量发展的意见建议。</p><p style=\"text-align: center;\"><img src=\"http://localhost:8080/upload/aaa.png\" alt=\"企业走访活动照片\" data-href=\"\" style=\"width: 50%;\"></p>",
+                "pubTime": 1754300343000,
+                "title": "【访企拓岗促就业】机电工程学院、数学与计算科学学院赴珠三角开展访企拓岗暨校友走访活动（图）"
+            };
+
+            log('数据加载成功: ' + articleData.title);
+
+            // 处理时间
+            const pubDate = new Date(articleData.pubTime);
+            const formattedTime = pubDate.toLocaleString();
+            log('时间格式化完成: ' + formattedTime);
+
+            // 获取DOM元素（原生方式）
+            const titleElement = document.getElementById('title');
+            const metaElement = document.getElementById('meta');
+            const contentElement = document.getElementById('content');
+
+            // 检查元素是否存在
+            log('标题元素存在: ' + (titleElement !== null));
+            log('元信息元素存在: ' + (metaElement !== null));
+            log('内容元素存在: ' + (contentElement !== null));
+
+            // 填充内容
+            if (titleElement) {
+                titleElement.textContent = articleData.title;
+                log('标题已设置');
+            }
+
+            if (metaElement) {
+                metaElement.textContent = `作者: ${articleData.author} | 发布时间: ${formattedTime} | 阅读量: ${articleData.clickCount}`;
+                log('元信息已设置');
+            }
+
+            if (contentElement) {
+                // 先显示测试文本
+                contentElement.textContent = '测试文本：容器工作正常，1秒后将显示实际内容...';
+
+                // 1秒后显示实际内容
+                setTimeout(() => {
+                    contentElement.innerHTML = articleData.content;
+                    log('正文内容已显示');
+                }, 1000);
+            }
+
+        } catch (error) {
+            log('发生错误: ' + error.message);
+            console.error(error);
+        }
+    });
+</script>
+</body>
+</html>

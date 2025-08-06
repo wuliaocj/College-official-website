@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻列表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #1a73e8;
+            text-align: center;
+        }
+
+        .nav-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-item a.active {
+            color: #1a73e8;
+            border-bottom: 2px solid #1a73e8;
+        }
+
+        .news-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .date-section {
+            margin-bottom: 30px;
+        }
+
+        .date-header {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .date-header h2 {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .news-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .news-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .news-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .category {
+            color: #666;
+            font-size: 0.9em;
+            padding: 2px 8px;
+            background-color: #f1f3f5;
+            border-radius: 4px;
+        }
+
+        .time {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        .news-title {
+            color: #1a73e8;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .news-desc {
+            color: #5f6368;
+            font-size: 0.9em;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .nav-list {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .news-card {
+                flex-direction: column;
+            }
+
+            .news-image {
+                width: 100%;
+                height: 180px;
+            }
+
+            .news-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .category {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+    window.load()
+</script>
+
+<header class="header">
+    <h1>最新新闻</h1>
+</header>
+
+<div class="nav-container">
+    <ul class="nav-list">
+        <li class="nav-item"><a href="#" class="active">全部</a></li>
+        <li class="nav-item"><a href="#">科技</a></li>
+        <li class="nav-item"><a href="#">财经</a></li>
+        <li class="nav-item"><a href="#">娱乐</a></li>
+    </ul>
+</div>
+
+<main class="news-container">
+<!--    &lt;!&ndash; 今天 &ndash;&gt;-->
+<!--    <div class="date-section">-->
+<!--        <div class="date-header">-->
+<!--            <h2>今天</h2>-->
+<!--        </div>-->
+
+<!--        <div class="news-card">-->
+<!--            <img src="https://picsum.photos/300/200?random=1" alt="科技新闻" class="news-image">-->
+<!--            <div class="news-content">-->
+<!--                <div class="news-top">-->
+<!--                    <span class="category">科技</span>-->
+<!--                    <span class="time">10:23</span>-->
+<!--                </div>-->
+<!--                <h3 class="news-title">AI技术突破：全新自然语言处理模型发布</h3>-->
+<!--                <p class="news-desc">某科技公司今日宣布推出新一代AI模型，显著提升多语言理解能力，引发行业关注...</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="news-card">-->
+<!--            <img src="https://picsum.photos/300/200?random=2" alt="财经新闻" class="news-image">-->
+<!--            <div class="news-content">-->
+<!--                <div class="news-top">-->
+<!--                    <span class="category">财经</span>-->
+<!--                    <span class="time">09:45</span>-->
+<!--                </div>-->
+<!--                <h3 class="news-title">全球股市波动：美联储利率政策成关键因素</h3>-->
+<!--                <p class="news-desc">受美联储加息预期影响，美股三大指数周一小幅收跌，科技股领跌...</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 昨天 &ndash;&gt;-->
+<!--    <div class="date-section">-->
+<!--        <div class="date-header">-->
+<!--            <h2>昨天</h2>-->
+<!--        </div>-->
+
+<!--        <div class="news-card">-->
+<!--            <img src="https://picsum.photos/300/200?random=3" alt="娱乐新闻" class="news-image">-->
+<!--            <div class="news-content">-->
+<!--                <div class="news-top">-->
+<!--                    <span class="category">娱乐</span>-->
+<!--                    <span class="time">18:30</span>-->
+<!--                </div>-->
+<!--                <h3 class="news-title">明星红毯造型盘点：年度时尚盛典亮点回顾</h3>-->
+<!--                <p class="news-desc">昨晚举行的时尚盛典上，多位明星亮相红毯，造型引发社交媒体热议...</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="news-card">-->
+<!--            <img src="https://picsum.photos/300/200?random=4" alt="科技新闻" class="news-image">-->
+<!--            <div class="news-content">-->
+<!--                <div class="news-top">-->
+<!--                    <span class="category">科技</span>-->
+<!--                    <span class="time">14:15</span>-->
+<!--                </div>-->
+<!--                <h3 class="news-title">新一代智能手机发布：续航提升50%，售价亲民</h3>-->
+<!--                <p class="news-desc">某知名厂商昨日发布新一代智能手机，搭载最新处理器，电池续航能力提升50%...</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 前天 &ndash;&gt;-->
+<!--    <div class="date-section">-->
+<!--        <div class="date-header">-->
+<!--            <h2>前天</h2>-->
+<!--        </div>-->
+
+<!--        <div class="news-card">-->
+<!--            <img src="https://picsum.photos/300/200?random=5" alt="财经新闻" class="news-image">-->
+<!--            <div class="news-content">-->
+<!--                <div class="news-top">-->
+<!--                    <span class="category">财经</span>-->
+<!--                    <span class="time">16:42</span>-->
+<!--                </div>-->
+<!--                <h3 class="news-title">国际贸易谈判取得进展，相关概念股大涨</h3>-->
+<!--                <p class="news-desc">据最新消息，两国贸易谈判取得重要进展，市场信心提振，相关出口企业股价大幅上涨...</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</main>
+
+<footer class="footer">
+    <p>© 2023 新闻资讯平台. 版权所有</p>
+</footer>
+</body>
+</html>
